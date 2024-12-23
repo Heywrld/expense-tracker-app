@@ -10,13 +10,17 @@ class NewExpense extends StatefulWidget {
 class _NewExpenseState extends State<NewExpense> {
   // using flutter to store the title text in the text field
   final _titleController = TextEditingController();
+  final _amountController = TextEditingController();
 
 // using flutter to dispose the title text in the text field afterwards
   @override
   void dispose() {
     _titleController.dispose();
+    _amountController.dispose();
     super.dispose();
   }
+
+  
 
 
   @override
@@ -34,16 +38,36 @@ class _NewExpenseState extends State<NewExpense> {
             ),
             
           ),
+          TextField( 
+            // register the value stored when the text field with flutter changes
+            controller: _amountController ,
+            // KeyboardType to edit the kind of textinput yo want
+            keyboardType: TextInputType.number,
+            decoration: const InputDecoration(
+              label: Text('Amount'),
+              prefixText: '\$ ',
+            ),
+            
+          ),
+
           Row(
             children: [
+              TextButton(
+                onPressed: () {
+                  // close off the modal
+                  Navigator.pop(context);
+                }, 
+                child: const Text('Cancel')
+                ),
               ElevatedButton(
                 onPressed: () {
                    print(_titleController.text);
+                   print(_amountController.text);
                 }, 
                 child: const Text('Save Expense'),
                 )
             ],
-          )
+          ),
         ],
       ),
       );
