@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:platnova_expense_tracker_app/models/expense.dart';
+
+
 
 class NewExpense extends StatefulWidget {
   const NewExpense({super.key});
@@ -11,17 +14,22 @@ class _NewExpenseState extends State<NewExpense> {
   // using flutter to store the title text in the text field
   final _titleController = TextEditingController();
   final _amountController = TextEditingController();
+  DateTime? _selectedDate; //the selected date either stores a value of type  DateTime or null
 
   // setting the date picker
-  void _presentDatePicker() {
+  void _presentDatePicker() async {
     final now = DateTime.now();
     final firstDate = DateTime(now.year - 1, now.month, now.day);
-    showDatePicker(
+   final pickedDate = await showDatePicker(
       context: context, 
       initialDate: now,
       firstDate: firstDate,  
       lastDate: now,
       );
+      // this line will be execute once the value is available using async, await feature
+      setState(() {
+        _selectedDate = pickedDate;
+      });
   }
 
 // using flutter to dispose the title text in the text field afterwards
@@ -72,7 +80,7 @@ class _NewExpenseState extends State<NewExpense> {
                 mainAxisAlignment: MainAxisAlignment.end,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                     const Text('Selected Date'),
+                     Text(_selectedDate == null ? 'No date selected' : formatter.format(_selectedDate!), ),//display the date dynamically and ! to force it and tell dart that _selectedDate cant be null
                      IconButton(
                       onPressed: _presentDatePicker, 
                       icon: const Icon(
