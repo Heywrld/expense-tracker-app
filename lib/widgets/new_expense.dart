@@ -15,6 +15,7 @@ class _NewExpenseState extends State<NewExpense> {
   final _titleController = TextEditingController();
   final _amountController = TextEditingController();
   DateTime? _selectedDate; //the selected date either stores a value of type  DateTime or null
+  Category _selectedCategory = Category.leisure;
 
   // setting the date picker
   void _presentDatePicker() async {
@@ -92,9 +93,28 @@ class _NewExpenseState extends State<NewExpense> {
               ),
               ],
           ),
-          
+          const SizedBox(height: 16,),
           Row(
             children: [
+              DropdownButton(
+                value: _selectedCategory, //display value on screen
+                items: Category.values.map(
+                  (category) => DropdownMenuItem(
+                    value: category,
+                    child: Text(category.name.toUpperCase(),
+                    ),
+                    ),
+                    ).toList(), // if showing type iterable error use .toList()
+                onChanged: (value) {
+                  if (value == null) {
+                    return;
+                  }
+                  setState(() {
+                    _selectedCategory = value; //the value was returning null so i had to use the if statement to check it
+                  });
+                }
+                ),
+                const Spacer(),
               TextButton(
                 onPressed: () {
                   // close off the modal
