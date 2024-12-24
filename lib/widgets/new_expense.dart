@@ -12,6 +12,18 @@ class _NewExpenseState extends State<NewExpense> {
   final _titleController = TextEditingController();
   final _amountController = TextEditingController();
 
+  // setting the date picker
+  void _presentDatePicker() {
+    final now = DateTime.now();
+    final firstDate = DateTime(now.year - 1, now.month, now.day);
+    showDatePicker(
+      context: context, 
+      initialDate: now,
+      firstDate: firstDate,  
+      lastDate: now,
+      );
+  }
+
 // using flutter to dispose the title text in the text field afterwards
   @override
   void dispose() {
@@ -38,18 +50,41 @@ class _NewExpenseState extends State<NewExpense> {
             ),
             
           ),
-          TextField( 
-            // register the value stored when the text field with flutter changes
-            controller: _amountController ,
-            // KeyboardType to edit the kind of textinput yo want
-            keyboardType: TextInputType.number,
-            decoration: const InputDecoration(
-              label: Text('Amount'),
-              prefixText: '\$ ',
-            ),
-            
+          Row(
+            children: [
+              Expanded(
+                child: TextField( 
+                // register the value stored when the text field with flutter changes
+                controller: _amountController ,
+                // KeyboardType to edit the kind of textinput yo want
+                keyboardType: TextInputType.number,
+                decoration: const InputDecoration(
+                  prefixText: '\$ ',
+                  label: Text('Amount'),
+                ),
+              ), 
+                ),
+              
+              const SizedBox(width: 16,),
+              
+               Expanded(
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                     const Text('Selected Date'),
+                     IconButton(
+                      onPressed: _presentDatePicker, 
+                      icon: const Icon(
+                        Icons.calendar_month,
+                      )
+                      )
+                ],
+              ),
+              ),
+              ],
           ),
-
+          
           Row(
             children: [
               TextButton(
