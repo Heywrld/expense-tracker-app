@@ -4,7 +4,9 @@ import 'package:platnova_expense_tracker_app/models/expense.dart';
 
 
 class NewExpense extends StatefulWidget {
-  const NewExpense({super.key});
+  const NewExpense({super.key, required this.onAddExpense});
+
+  final void Function(Expense expense) onAddExpense;
 
   @override
   State<NewExpense> createState() => _NewExpenseState();
@@ -59,6 +61,16 @@ class _NewExpenseState extends State<NewExpense> {
         );
         return; // adding return after showdialog inside if statement because i just want to show dialog and do nothing else after
     }
+
+    widget.onAddExpense(
+      Expense(
+        title: _titleController.text, 
+        amount: enteredAmount, 
+        date: _selectedDate!, //wont be null, 
+        category: _selectedCategory,
+        ),
+        );
+        Navigator.pop(context); //make sure overlay is closed
   }
 
 // using flutter to dispose the title text in the text field afterwards
@@ -75,7 +87,7 @@ class _NewExpenseState extends State<NewExpense> {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.all(16),
+      padding: const EdgeInsets.fromLTRB(16, 0, 16, 16), // style tghe padding from left, top, right, bottom
       child: Column(
         children: [
           TextField( 
