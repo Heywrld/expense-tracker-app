@@ -27,7 +27,7 @@ class _ExpensesState extends State<Expenses> {
       category: Category.food,
       ),
       Expense(
-      title: 'shortlet', 
+      title: 'short let',
       amount: 30000, 
       date: DateTime.now(), 
       category: Category.travel
@@ -42,14 +42,15 @@ class _ExpensesState extends State<Expenses> {
 
       void _openAddExpenseOverlay() {
         showModalBottomSheet(
-          isScrollControlled: true, // make sure the keyboard doesnt obscure the form
+          isScrollControlled: true, // make sure the keyboard doesn't obscure the form
           context: context, 
           builder:(ctx) =>  NewExpense(onAddExpense: _addExpense),
           );
       }
 
-      // add exense
+      // add expense
       void _addExpense(Expense expense) {
+
         setState(() {
           _registeredExpenses.add(expense);
         });
@@ -57,14 +58,45 @@ class _ExpensesState extends State<Expenses> {
 
       //remove expense
       void _removeExpense(Expense expense) {
+        final expenseIndex = _registeredExpenses.indexOf(expense); // store the initial position of the swiped expense
+
         setState(() {
           _registeredExpenses.remove(expense);
         });
+
+        ScaffoldMessenger.of(context).clearSnackBars(); // clears old message and immediately shows the new one
+        ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+                duration: const Duration(seconds: 3),
+                content: const Text('Expense deleted'),
+                action: SnackBarAction(
+                    label: 'Undo',
+                    onPressed: () {
+                      setState(() {
+                        _registeredExpenses.insert(expenseIndex, expense);
+                      });
+
+                    },
+                ),
+            ), // display  a message anytime you swipe out an expense to show if you want to undo
+        );
       }
 
 
   @override
   Widget build(BuildContext context) {
+    Widget mainContent = const Center(
+      child: Text('No expense found. Start adding some!'),
+    ); //store main content as a widget 
+    
+    if (_registeredExpenses.isNotEmpty) {
+      mainContent = ExpensesList(
+              expenses: _registeredExpenses,
+              onRemoveExpense: _removeExpense, //pass removeExpense as a value 
+              );
+    } // if the registered Expenses is not empty , then the main content should display the expenses list
+
+
     return  Scaffold(
       appBar: AppBar(
         title: const Text("Platnova Expense Tracker"),
@@ -79,10 +111,7 @@ class _ExpensesState extends State<Expenses> {
         children: [
           const Text('The chart'),
           Expanded(
-            child: ExpensesList(
-              expenses: _registeredExpenses,
-              onRemoveExpense: _removeExpense, //pass removeExpense as a value 
-              ),
+            child: mainContent,
               ),
         ],
       ),
@@ -90,4 +119,4 @@ class _ExpensesState extends State<Expenses> {
   }
 }
 
-// expenses displays a column inside a column , youll run into problems, wrap with Expanded()
+// expenses displays a column inside a column , you will run into problems, wrap with Expanded()

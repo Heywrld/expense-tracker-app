@@ -38,7 +38,7 @@ class _NewExpenseState extends State<NewExpense> {
   // validating user input
   void _submitExpenseData () {
     final enteredAmount = double.tryParse(_amountController.text); // convert text to a number and if it cant will be null
-    // amountisvalid if enteredamount is null or enteredamount is less than or equal to 0
+    // amountisvalid if entered amount is null or entered amount is less than or equal to 0
     final amountISValid = enteredAmount == null || enteredAmount <= 0;
     if (_titleController.text.trim().isEmpty || amountISValid || _selectedDate == null) {
       //show error message
@@ -59,7 +59,7 @@ class _NewExpenseState extends State<NewExpense> {
           ],
         ),
         );
-        return; // adding return after showdialog inside if statement because i just want to show dialog and do nothing else after
+        return; // adding return after show dialog inside if statement because i just want to show dialog and do nothing else after
     }
 
     widget.onAddExpense(
@@ -87,7 +87,7 @@ class _NewExpenseState extends State<NewExpense> {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.fromLTRB(16, 0, 16, 16), // style tghe padding from left, top, right, bottom
+      padding: const EdgeInsets.fromLTRB(16, 48, 16, 16), // style the padding from left, top, right, bottom
       child: Column(
         children: [
           TextField( 
@@ -105,7 +105,7 @@ class _NewExpenseState extends State<NewExpense> {
                 child: TextField( 
                 // register the value stored when the text field with flutter changes
                 controller: _amountController ,
-                // KeyboardType to edit the kind of textinput yo want
+                // KeyboardType to edit the kind of text input yo want
                 keyboardType: TextInputType.number,
                 decoration: const InputDecoration(
                   prefixText: '\$ ',

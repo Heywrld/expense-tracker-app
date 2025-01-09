@@ -28,7 +28,7 @@ class ExpensesList extends StatelessWidget {
         ExpenseItem(
           expenses[index],
           ),
-      ), //dissmiss the saved expenses when being swiped
+      ), //dismiss the saved expenses when being swiped
       
       ) ;
   }
