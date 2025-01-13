@@ -21,6 +21,12 @@ class ExpensesList extends StatelessWidget {
       itemBuilder: (ctx, index) => 
       Dismissible(
         key: ValueKey(expenses[index]), 
+        background: Container(
+          color: Theme.of(context).colorScheme.error , // set color from theme that shows the user once the user swipes to delete
+          margin: EdgeInsets.symmetric(
+            horizontal: Theme.of(context).cardTheme.margin!.horizontal
+          ), // set the margin from the theme
+        ),
         onDismissed: (direction) {
           onRemoveExpense(expenses[index]);
         }, // allows you to trigger a function whenever one widget has been swipped away

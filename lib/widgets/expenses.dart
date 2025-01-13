@@ -98,12 +98,20 @@ class _ExpensesState extends State<Expenses> {
 
 
     return  Scaffold(
-      appBar: AppBar(
-        title: const Text("Platnova Expense Tracker"),
+      appBar: AppBar(        
+        leading: Container(
+          padding: const EdgeInsets.fromLTRB(25, 0, 0, 0),
+          child: Image.asset(
+            'assets/images/logo-white.png',
+            width: 300,
+            height: 200,
+            ),
+        ),
+        //title: const Text("Platnova Expense Tracker"),
         actions: [
           IconButton(
             onPressed: _openAddExpenseOverlay, 
-            icon: const Icon(Icons.add),
+            icon: const Icon(Icons.add, color: Colors.white,),
             ),
         ],
       ),

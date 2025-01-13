@@ -15,8 +15,12 @@ class ExpenseItem extends StatelessWidget {
           vertical: 16,
         ),
         child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start, //makes sure the title in the column starts from the left
           children: [
-            Text(expense.title),
+            Text(
+              expense.title,
+              style: Theme.of(context).textTheme.titleLarge, // access the theme styling for title large
+              ),
             const SizedBox(height: 4,),
             Row(
               children: [
