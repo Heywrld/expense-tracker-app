@@ -1,6 +1,7 @@
 
 
 import 'package:flutter/material.dart';
+import 'package:platnova_expense_tracker_app/widgets/chart/chart.dart';
 import 'package:platnova_expense_tracker_app/widgets/expenses_list/expenses_list.dart';
 import 'package:platnova_expense_tracker_app/models/expense.dart';
 import 'package:platnova_expense_tracker_app/widgets/new_expense.dart';
@@ -117,7 +118,7 @@ class _ExpensesState extends State<Expenses> {
       ),
       body: Column(
         children: [
-          const Text('The chart'),
+          Chart(expenses: _registeredExpenses ),
           Expanded(
             child: mainContent,
               ),

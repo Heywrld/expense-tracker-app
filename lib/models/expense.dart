@@ -36,3 +36,33 @@ class Expense {
   }
   
 }
+
+// expense bucket, we need multiple buckets for each category, so that we can sum all the expenses for that category and display them as chart
+class ExpenseBucket {
+  const ExpenseBucket({
+    required this.category,
+    required this.expenses,
+  });
+
+  //add my own alternative named constructor function
+
+  ExpenseBucket.forCategory(List<Expense> allExpenses, this.category) 
+  : expenses = allExpenses
+  .where((expense) => expense.category == category)
+  .toList() ;
+
+
+  final Category category;
+  final List<Expense> expenses;
+
+  // get the total expenses
+  double get totalExpenses {
+    double sum = 0;
+
+    for (final expense in expenses) {
+      sum += expense.amount; // sum =sum + expense.amount
+    } //for in loop
+
+    return sum;
+  }
+}
